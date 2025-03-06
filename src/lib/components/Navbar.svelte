@@ -54,7 +54,7 @@
 		<div class="flex items-center" data-aos="fade-right" data-aos-once="true">
 			<a href="/" class="flex items-center">
 				<img
-					src="src/lib/assets/black-trans.png"
+					src="src\lib\assets\black-trans.png"
 					alt="PocketRx"
 					class="h-12 w-auto transition-transform hover:scale-105"
 				/>

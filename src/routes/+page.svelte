@@ -49,7 +49,7 @@
 
 <!-- Hero Section -->
 <section
-	class="relative overflow-hidden bg-gradient-to-b from-[#f5f9ff] via-white to-white pt-60 pb-24"
+	class="relative overflow-hidden bg-gradient-to-b from-[#f5f9ff] via-white to-white pt-40 pb-24"
 >
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex flex-col items-center text-center lg:flex-row lg:justify-between lg:text-left">
