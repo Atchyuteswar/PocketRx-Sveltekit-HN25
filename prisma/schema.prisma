@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  reports   Report[]
+}
+
+model Report {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String       @db.ObjectId
+  user            User         @relation(fields: [userId], references: [id])
+  filePath        String
+  fileName        String
+  uploadDate      DateTime     @default(now())
+  labName         String?
+  reportId        String?
+  collectionDate  DateTime?
+  processed       Boolean      @default(false)
+  patientInfo     PatientInfo?
+  testResults     TestResult[]
+  recommendations Specialist[]
+}
+
+model PatientInfo {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  reportId    String  @unique @db.ObjectId
+  report      Report  @relation(fields: [reportId], references: [id])
+  name        String?
+  age         Int?
+  gender      String?
+  otherDetails Json?
+}
+
+model TestResult {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  reportId      String  @db.ObjectId
+  report        Report  @relation(fields: [reportId], references: [id])
+  testName      String
+  value         Float
+  unit          String?
+  normalRangeMin Float?
+  normalRangeMax Float?
+  isAbnormal    Boolean
+  status        String // 'High', 'Low', 'Normal'
+  createdAt     DateTime @default(now())
+}
+
+model Specialist {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  reportId    String @db.ObjectId
+  report      Report @relation(fields: [reportId], references: [id])
+  name        String
+  reason      String?
+}

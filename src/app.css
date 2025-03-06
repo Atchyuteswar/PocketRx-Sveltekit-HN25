@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@plugin '@tailwindcss/forms';
+
+@import './lib/styles/variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  background-color: #fff;
+  color: var(--color-primary);
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Update buttons */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-on-secondary);
+}
+
+/* Update links */
+a {
+  color: var(--color-primary);
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+  color: var(--color-primary-light);
+}
+
+/* Update headers */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-primary);
+}
+
+/* Update form elements */
+input:focus, 
+textarea:focus, 
+select:focus {
+  border-color: var(--color-secondary);
+  outline-color: var(--color-primary);
+}
+
+.feature-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Optional: Add a subtle transition for interactive elements */
+button {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Custom Scrollbar Styling */
+
+body {
+    --sb-track-color: #ffffff;
+    --sb-thumb-color: #0080ff;
+    --sb-size: 7px;
+  }
+  
+  body::-webkit-scrollbar {
+    width: var(--sb-size)
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+    
+  }
+  
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
+  }
+
+@layer components {
+  .btn-primary {
+    @apply rounded-lg bg-[#00203F] px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:ring-2 focus:ring-[#00203F]/50 focus:outline-none;
+  }
+
+  .btn-secondary {
+    @apply rounded-lg border-2 border-[#00203F] bg-transparent px-8 py-3 text-lg font-semibold text-[#00203F] shadow-lg transition-all hover:scale-105 hover:bg-[#ADEFD1]/20 hover:shadow-xl focus:ring-2 focus:ring-[#00203F]/50 focus:outline-none;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-[#00203F] to-[#0080FF] bg-clip-text text-transparent;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+}
