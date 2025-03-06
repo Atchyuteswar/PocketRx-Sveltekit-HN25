@@ -1,4 +1,9 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
+    
+    let loading = false;
+    let error = '';
+    
     let formData = {
         email: '',
         password: '',
@@ -13,14 +18,27 @@
     };
 
     async function handleSubmit() {
-        const response = await fetch('/api/auth/register', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' }
-        });
+        loading = true;
+        error = '';
         
-        if (response.ok) {
-            window.location.href = '/dashboard';
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                await goto('/dashboard');
+            } else {
+                error = data.message || 'Registration failed';
+            }
+        } catch (err) {
+            error = 'An error occurred during registration';
+        } finally {
+            loading = false;
         }
     }
 </script>
@@ -35,6 +53,13 @@
                 Please fill in your health information
             </p>
         </div>
+
+        <!-- Add error message display -->
+        {#if error}
+            <div class="text-red-600 text-center mb-4">
+                {error}
+            </div>
+        {/if}
 
         <form on:submit|preventDefault={handleSubmit} class="space-y-6">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -152,12 +177,18 @@
                 </div>
             </div>
 
+            <!-- Update the button to show loading state -->
             <div class="flex items-center justify-between">
                 <button 
                     type="submit" 
-                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                    disabled={loading}
                 >
-                    Register
+                    {#if loading}
+                        Registering...
+                    {:else}
+                        Register
+                    {/if}
                 </button>
             </div>
 
