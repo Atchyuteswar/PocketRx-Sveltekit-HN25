@@ -15,6 +15,9 @@
     let error = '';
     let formSubmitted = false;
     let formSubmitting = false;
+    let firstName = '';
+    let lastName = '';
+    let subject = '';
 
     const PUBLIC_KEY = env.PUBLIC_EMAILJS_PUBLIC_KEY;
     const TEMPLATE_ID = env.PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -44,38 +47,35 @@
         success = false;
 
         const templateParams = {
-            from_name: name,
+            from_name: `${firstName} ${lastName}`,
             to_name: 'PocketRx Team',
+            subject: subject,
             reply_to: email,
             message: message
         };
 
         try {
-            // If EmailJS is configured, use it
             if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
-                const response = await emailjs.sendForm(
+                const response = await emailjs.send(
                     SERVICE_ID,
                     TEMPLATE_ID,
-                    e.target as HTMLFormElement,
+                    templateParams,
                     PUBLIC_KEY
                 );
 
                 if (response.status === 200) {
                     success = true;
                     formSubmitted = true;
-                    name = '';
+                    firstName = '';
+                    lastName = '';
                     email = '';
+                    subject = '';
                     message = '';
                 } else {
                     throw new Error('Failed to send email');
                 }
             } else {
-                // Simulate form submission if EmailJS is not configured
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                formSubmitted = true;
-                name = '';
-                email = '';
-                message = '';
+                throw new Error('EmailJS configuration missing');
             }
         } catch (e) {
             console.error('Error sending email:', e);
@@ -180,8 +180,9 @@
                                     <input
                                         type="text"
                                         id="first-name"
-                                        name="first-name"
+                                        name="from_name"
                                         required
+                                        bind:value={firstName}
                                         class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-[#00203F] focus:outline-none focus:ring-2 focus:ring-[#00203F]/20"
                                         placeholder="Your first name"
                                     />
@@ -193,8 +194,9 @@
                                     <input
                                         type="text"
                                         id="last-name"
-                                        name="last-name"
+                                        name="last_name"
                                         required
+                                        bind:value={lastName}
                                         class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-[#00203F] focus:outline-none focus:ring-2 focus:ring-[#00203F]/20"
                                         placeholder="Your last name"
                                     />
@@ -207,7 +209,7 @@
                                 <input
                                     type="email"
                                     id="email"
-                                    name="email"
+                                    name="reply_to"
                                     required
                                     bind:value={email}
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-[#00203F] focus:outline-none focus:ring-2 focus:ring-[#00203F]/20"
@@ -223,6 +225,7 @@
                                     id="subject"
                                     name="subject"
                                     required
+                                    bind:value={subject}
                                     class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-[#00203F] focus:outline-none focus:ring-2 focus:ring-[#00203F]/20"
                                     placeholder="How can we help you?"
                                 />
