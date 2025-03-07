@@ -1,24 +1,41 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
+    import { user } from '$lib/stores/auth';
+    
     let email = '';
     let password = '';
     let error = '';
+    let isLoading = false;
+    let showDashboard = false;
 
     async function handleSubmit() {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password }),
-            headers: { 'Content-Type': 'application/json' }
-        });
+        isLoading = true;
+        error = '';
         
-        if (response.ok) {
-            window.location.href = '/dashboard';
-        } else {
-            error = 'Invalid credentials';
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password }),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                user.set(data.user);
+                goto('/dashboard');  // Redirect to dashboard page
+            } else {
+                error = data.message;
+            }
+        } catch (e) {
+            error = 'An error occurred. Please try again.';
+        } finally {
+            isLoading = false;
         }
     }
 </script>
 
-<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-18">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
@@ -67,9 +84,14 @@
                 <div>
                     <button
                         type="submit"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        disabled={isLoading}
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                     >
-                        Sign in
+                        {#if isLoading}
+                            Loading...
+                        {:else}
+                            Sign in
+                        {/if}
                     </button>
                 </div>
             </form>

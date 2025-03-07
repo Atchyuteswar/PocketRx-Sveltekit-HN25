@@ -101,12 +101,6 @@
 						{link.text}
 					</a>
 				{/each}
-				<a
-					href="/contact-us"
-					class="rounded-full bg-[#00203F] px-6 py-2 font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-				>
-					Get App
-				</a>
 			</div>
 		{/if}
 
@@ -128,14 +122,6 @@
 								{link.text}
 							</a>
 						{/each}
-						<a
-							href="/contact-us"
-							class="mt-4 rounded-full bg-[#00203F] px-8 py-3 text-xl font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-							transition:fly={{ y: 20, delay: 100 * links.length, duration: 300, easing: quintOut }}
-							on:click={toggleMenu}
-						>
-							Get App
-						</a>
 					</div>
 				</div>
 			</div>

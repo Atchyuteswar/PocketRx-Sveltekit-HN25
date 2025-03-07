@@ -1,28 +1,34 @@
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 import { prisma } from '$lib/server/prisma';
-import { verifyPassword, createJWT } from '$lib/server/auth';
+import bcrypt from 'bcrypt';
 
-export async function POST({ request, cookies }) {
+export const POST: RequestHandler = async ({ request }) => {
     const { email, password } = await request.json();
 
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
-        return json({ error: 'Invalid credentials' }, { status: 400 });
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (!user) {
+            return json({ message: 'Invalid credentials' }, { status: 401 });
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            return json({ message: 'Invalid credentials' }, { status: 401 });
+        }
+
+        return json({
+            user: {
+                id: user.id,
+                email: user.email,
+                name: user.name
+            }
+        });
+    } catch (error) {
+        return json({ message: 'Server error' }, { status: 500 });
     }
-
-    const valid = await verifyPassword(password, user.password);
-    if (!valid) {
-        return json({ error: 'Invalid credentials' }, { status: 400 });
-    }
-
-    const token = createJWT(user.id);
-    cookies.set('auth_token', token, {
-        path: '/',
-        httpOnly: true,
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 24 * 7 // 7 days
-    });
-
-    return json({ success: true });
-}
+};

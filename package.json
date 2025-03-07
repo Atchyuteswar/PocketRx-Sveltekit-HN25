@@ -44,6 +44,7 @@
 	},
 	"dependencies": {
 		"@emailjs/browser": "^4.4.1",
+		"@google/generative-ai": "^0.24.0",
 		"@prisma/client": "^6.4.1",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/jsonwebtoken": "^9.0.9",
