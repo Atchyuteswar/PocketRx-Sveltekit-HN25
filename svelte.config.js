@@ -5,14 +5,21 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
     kit: {
         adapter: adapter({
-            runtime: 'nodejs18.x'
+            // Use Edge runtime for better performance
+            runtime: 'edge',
+            // Include all paths in the lambda function
+            regions: ['iad1'],
+            // Ensure all routes are properly handled
+            externals: []
         }),
         prerender: {
             handleHttpError: ({ path, referrer, message }) => {
                 if (path === '/not-found') return;
                 throw new Error(message);
             }
-        }
+        },
+        // Add trailingSlash configuration to handle URL formats consistently
+        trailingSlash: 'never'
     },
     preprocess: vitePreprocess()
 };
