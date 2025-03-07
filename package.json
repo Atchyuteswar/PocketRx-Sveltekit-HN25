@@ -58,6 +58,8 @@
 		"jsonwebtoken": "^9.0.2",
 		"mini-svg-data-uri": "^1.4.4",
 		"mongodb": "^6.14.2",
+		"pdfjs": "^2.5.3",
+		"pdfjs-dist": "^4.10.38",
 		"svelte-motion": "^0.12.2",
 		"tailwind-merge": "^3.0.2"
 	}

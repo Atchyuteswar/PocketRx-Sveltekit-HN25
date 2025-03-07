@@ -56,25 +56,42 @@
     }
 </script>
 
-<div class="max-w-4xl mx-auto py-8 px-4">
-    <div class="bg-white rounded-lg shadow-md h-[600px] flex flex-col">
-        <div class="p-4 border-b">
-            <h1 class="text-xl font-semibold">Health Advisor Chat</h1>
+<div class="max-w-4xl mx-auto pt-48 py-8 px-4">
+    <div class="bg-white rounded-xl shadow-lg h-[700px] flex flex-col border border-gray-100">
+        <div class="p-6 border-b bg-gradient-to-r from-blue-50 to-green-50">
+            <div class="flex items-center">
+                <div class="bg-blue-100 p-3 rounded-full">
+                    <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Health Advisor Chat</h1>
+                    <p class="text-sm text-gray-600">Get instant answers to your health queries</p>
+                </div>
+            </div>
         </div>
 
         <!-- Chat messages -->
-        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-50">
             {#each messages as message}
-                <div class="flex {message.role === 'user' ? 'justify-end' : 'justify-start'}">
-                    <div class="max-w-[80%] rounded-lg p-3 {message.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}">
+                <div class="flex {message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in">
+                    <div class="max-w-[80%] rounded-2xl p-4 shadow-sm
+                        {message.role === 'user' 
+                            ? 'bg-blue-600 text-white ml-4' 
+                            : 'bg-white text-gray-800 mr-4'}">
                         {message.content}
                     </div>
                 </div>
             {/each}
             {#if isTyping}
-                <div class="flex justify-start">
-                    <div class="bg-gray-100 rounded-lg p-3">
-                        Typing...
+                <div class="flex justify-start animate-pulse">
+                    <div class="bg-white rounded-2xl p-4 shadow-sm mr-4">
+                        <div class="flex space-x-2">
+                            <div class="h-3 w-3 bg-gray-200 rounded-full"></div>
+                            <div class="h-3 w-3 bg-gray-200 rounded-full"></div>
+                            <div class="h-3 w-3 bg-gray-200 rounded-full"></div>
+                        </div>
                     </div>
                 </div>
             {/if}
@@ -82,28 +99,42 @@
 
         <!-- Error message -->
         {#if error}
-            <div class="p-2 text-center text-red-600 bg-red-50">
+            <div class="p-4 mx-6 my-2 text-center text-red-600 bg-red-50 rounded-lg border border-red-100">
                 {error}
             </div>
         {/if}
 
         <!-- Input area -->
-        <div class="p-4 border-t">
-            <form on:submit|preventDefault={sendMessage} class="flex gap-2">
+        <div class="p-6 border-t bg-white">
+            <form on:submit|preventDefault={sendMessage} class="flex gap-4">
                 <input
                     type="text"
                     bind:value={userInput}
                     placeholder="Type your health-related question..."
-                    class="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="flex-1 p-4 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
                     type="submit"
                     disabled={isTyping}
-                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    class="px-6 py-4 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-medium flex items-center"
                 >
-                    Send
+                    <span>Send</span>
+                    <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
                 </button>
             </form>
         </div>
     </div>
 </div>
+
+<style>
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
