@@ -206,7 +206,7 @@
 				</a>
 				<a
 					href="/about"
-					class="rounded-lg border-2 border-white px-8 py-3 text-lg font-medium text-white transition-all hover:bg-white/10 hover:shadow-lg"
+					class="rounded-lg text-white border-2 border-white px-8 py-3 text-lg font-medium transition-all hover:bg-white/10 hover:shadow-lg"
 				>
 					Learn More
 				</a>
