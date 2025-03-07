@@ -1,5 +1,6 @@
 {
     "version": 2,
+    "framework": "sveltekit",
     "builds": [
         {
             "src": "package.json",
@@ -14,6 +15,12 @@
         {
             "src": "/(.*)",
             "dest": "/"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ],
     "env": {
