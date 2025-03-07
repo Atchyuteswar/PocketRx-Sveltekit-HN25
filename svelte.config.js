@@ -5,8 +5,19 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
     kit: {
         adapter: adapter({
-            runtime: 'nodejs18.x'
-        })
+            runtime: 'nodejs18.x',
+            edge: false,
+            external: [],
+            split: false
+        }),
+        // Add this section
+        prerender: {
+            handleHttpError: ({ path, referrer, message }) => {
+                // ignore deliberate link to non-existent page
+                if (path === '/not-found') return;
+                throw new Error(message);
+            }
+        }
     },
     preprocess: vitePreprocess()
 };
