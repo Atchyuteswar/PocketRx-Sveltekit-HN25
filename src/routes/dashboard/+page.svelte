@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { user } from '$lib/stores/auth';
+    import { user, auth } from '$lib/stores/auth';
     import { goto } from '$app/navigation';
+    import { onMount } from 'svelte';
 
     function handleUploadReport() {
         goto('/dashboard/report-analyser');
@@ -9,6 +10,12 @@
     function handleGetAdvice() {
         // TODO: Implement health advice functionality
     }
+
+    onMount(() => {
+        if (!$auth.isAuthenticated) {
+            goto('/');
+        }
+    });
 </script>
 
 <div class="min-h-screen bg-gray-100 py-12 px-4 pt-48 sm:px-6 lg:px-8">
@@ -62,4 +69,9 @@
             </a>
         </div>
     </div>
+</div>
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
+    <p>Welcome, {$auth.user?.name}!</p>
 </div>

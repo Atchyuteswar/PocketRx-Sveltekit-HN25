@@ -1,8 +1,6 @@
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Timeline, TimelineItem } from 'flowbite-svelte';
-	import { CalendarWeekSolid } from 'flowbite-svelte-icons';
 
 	let isIntersecting = false;
 	let statsContainer: HTMLElement;
@@ -53,7 +51,7 @@
 >
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex flex-col items-center text-center lg:flex-row lg:justify-between lg:text-left">
-			<div class="lg:w-1/2 lg:pr-8" data-aos="fade-right">
+			<div class="w-250 lg:pr-8" data-aos="fade-right">
 				<h1
 					class="mb-6 text-4xl font-extrabold tracking-tight text-[#00203F] sm:text-5xl lg:text-6xl"
 				>
@@ -64,32 +62,16 @@
 					health recommendations and take control of your well-being.
 				</p>
 				<div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-					<button class="btn-primary"> Download App </button>
+					<button class="btn-primary"> Wanna Try ? </button>
 					<a href="/services">
 						<button class="btn-secondary"> Learn More </button>
 					</a>
 				</div>
 			</div>
-			<div class="mt-12 lg:mt-0 lg:w-1/2" data-aos="fade-up" data-aos-delay="200">
+			<div class="mt-12 lg:mt-0" data-aos="fade-up" data-aos-delay="200">
 				<!-- Phone mockup with app screenshot -->
 				<div class="relative mx-auto w-full max-w-md">
 					<div class="relative">
-						<!-- Phone frame -->
-						<div class="relative z-10 mx-auto w-[280px]">
-							<img src="/images/phone-mockup.png" alt="Phone mockup" class="w-full" />
-						</div>
-
-						<!-- App screenshot inside frame -->
-						<div
-							class="absolute top-[10%] left-1/2 z-0 h-[80%] w-[90%] -translate-x-1/2 overflow-hidden rounded-3xl bg-white shadow-inner"
-						>
-							<img
-								src="/images/app-screenshot.jpg"
-								alt="App screenshot"
-								class="h-full w-full object-cover"
-							/>
-						</div>
-
 						<!-- Decorative elements -->
 						<div
 							class="absolute top-8 -right-8 h-20 w-20 rounded-full bg-[#ADEFD1]/40 blur-lg"
@@ -535,7 +517,7 @@
 				<p class="mb-6 text-3xl text-white font-bold sm:text-4xl">Ready to Understand Your Health Better?</p>
 				<p class="mb-8 text-xl opacity-90">
 					Download PocketRx today and start making sense of your health reports. Take control of
-					your health journey with clear, personalized insights.
+					your health journey with clear, personalized insights. COMMING SOON...
 				</p>
 				<div
 					class="flex flex-col items-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 lg:items-start"

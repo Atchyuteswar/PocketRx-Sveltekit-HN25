@@ -9,25 +9,25 @@
 			name: 'Adarsh Yerram',
 			role: 'Founder & CEO',
 			image: 'src/lib/assets/team/adarsh-dp.jpeg',
-			bio: 'With over 15 years of experience in healthcare technology, Dr. Johnson founded PocketRx to make medical information accessible to everyone.'
+			bio: 'Student at Marri Laxman Reddy Institution of Technology and Management - Hyderabad.'
 		},
 		{
 			name: 'Atchyuteswar Gottumukkala',
 			role: 'Chief Technical Officer',
 			image: 'src/lib/assets/team/atchyut-dp.jpeg',
-			bio: 'Board-certified physician with expertise in preventive medicine and digital health, ensuring medical accuracy in all our algorithms.'
+			bio: 'Student at Marri Laxman Reddy Institution of Technology and Management - Hyderabad.'
 		},
 		{
 			name: 'Srujana Niranjan',
 			role: 'Head of Research',
 			image: 'src/lib/assets/team/srujana-dp.jpeg',
-			bio: 'Former AI research lead at a major tech company, Michael specializes in machine learning applications in healthcare.'
+			bio: 'Student Nalla Narasimha Reddy Group - Hyderabad.'
 		},
 		{
 			name: 'Pooja Kasini',
 			role: 'Product Designer',
 			image: 'src/lib/assets/team/pooja-dp.jpeg',
-			bio: 'Product specialist with a background in UX design and a passion for creating intuitive healthcare solutions.'
+			bio: 'Student at NxtWave Institution of Advanced Technologies - Hyderabad.'
 		}
 	];
 
@@ -110,7 +110,7 @@
 				<div class="relative mx-auto max-w-lg">
 					<!-- Main image -->
 					<img
-						src="/images/about-main.jpg"
+						src="src\lib\assets\about-hero.jpg"
 						alt="PocketRx team working"
 						class="relative z-10 w-full rounded-lg shadow-xl"
 					/>
@@ -123,7 +123,7 @@
 						<div
 							class="flex h-full w-full items-center justify-center text-center text-xl font-bold text-white"
 						>
-							est.<br />2023
+							est.<br />2025
 						</div>
 					</div>
 				</div>
@@ -385,7 +385,7 @@
 	<div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
 			<div data-aos="fade-right">
-				<h2 class="mb-6 text-3xl font-bold sm:text-4xl">Join the Health Intelligence Revolution</h2>
+				<p class="mb-6 text-3xl font-bold sm:text-4xl">Join the Health Intelligence Revolution</p>
 				<p class="mb-8 text-lg text-white/80">
 					Download PocketRx today and take the first step towards understanding your health like
 					never before. Our app is available on both iOS and Android platforms.

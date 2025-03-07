@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { auth } from '$lib/stores/auth';
+	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
@@ -32,6 +34,14 @@
 
 	function checkMobile() {
 		isMobile = window.innerWidth <= 768;
+	}
+
+	function handleLogin() {
+		goto('/login');
+	}
+
+	function handleLogout() {
+		auth.logout();
 	}
 
 	onMount(() => {
@@ -86,7 +96,7 @@
 
 		<!-- Desktop Menu -->
 		{#if !isMobile}
-			<div class="flex space-x-8" data-aos="fade-left" data-aos-once="true">
+			<div class="flex items-center space-x-8" data-aos="fade-left" data-aos-once="true">
 				{#each links as link, i}
 					<a
 						href={link.href}
@@ -101,6 +111,22 @@
 						{link.text}
 					</a>
 				{/each}
+
+				{#if $auth.isAuthenticated}
+					<button
+						on:click={handleLogout}
+						class="relative text-lg font-medium text-[#00203F] hover:text-red-600 transition-colors"
+					>
+						LOGOUT
+					</button>
+				{:else}
+					<button
+						on:click={handleLogin}
+						class="rounded-md bg-[#00203F] px-4 py-2 text-white hover:bg-[#003366] transition-colors"
+					>
+						LOGIN
+					</button>
+				{/if}
 			</div>
 		{/if}
 
@@ -122,6 +148,24 @@
 								{link.text}
 							</a>
 						{/each}
+
+						{#if $auth.isAuthenticated}
+							<button
+								on:click={() => { handleLogout(); toggleMenu(); }}
+								class="text-2xl font-medium text-[#00203F] hover:text-red-600"
+								transition:fly={{ y: 20, delay: 100 * links.length, duration: 300, easing: quintOut }}
+							>
+								LOGOUT
+							</button>
+						{:else}
+							<button
+								on:click={() => { handleLogin(); toggleMenu(); }}
+								class="text-2xl font-medium text-[#00203F]"
+								transition:fly={{ y: 20, delay: 100 * links.length, duration: 300, easing: quintOut }}
+							>
+								LOGIN
+							</button>
+						{/if}
 					</div>
 				</div>
 			</div>

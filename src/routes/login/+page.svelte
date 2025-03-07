@@ -1,12 +1,25 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { user } from '$lib/stores/auth';
+    import { auth } from '$lib/stores/auth';
+    import { onMount } from 'svelte';
     
     let email = '';
     let password = '';
     let error = '';
     let isLoading = false;
-    let showDashboard = false;
+    let isDbConnected = false;
+
+    async function checkDatabaseConnection() {
+        try {
+            const response = await fetch('/api/auth/check-connection');
+            isDbConnected = (await response.json()).connected;
+            if (!isDbConnected) {
+                error = 'Database connection is not available';
+            }
+        } catch (e) {
+            error = 'Unable to verify database connection';
+            isDbConnected = false;
+        }
+    }
 
     async function handleSubmit() {
         isLoading = true;
@@ -15,24 +28,27 @@
         try {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
-                body: JSON.stringify({ email, password }),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
             });
-            
+
             const data = await response.json();
-            
-            if (response.ok) {
-                user.set(data.user);
-                goto('/dashboard');  // Redirect to dashboard page
+
+            if (response.ok && data.success) {
+                await auth.login(data.user);
             } else {
-                error = data.message;
+                error = data.message || 'Invalid credentials';
             }
         } catch (e) {
             error = 'An error occurred. Please try again.';
+            console.error('Login error:', e);
         } finally {
             isLoading = false;
         }
     }
+
+    // Check database connection when component mounts
+    onMount(checkDatabaseConnection);
 </script>
 
 <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-18">
@@ -44,6 +60,12 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            {#if !isDbConnected}
+                <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <span class="block sm:inline">Database connection is unavailable</span>
+                </div>
+            {/if}
+            
             {#if error}
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                     <span class="block sm:inline">{error}</span>

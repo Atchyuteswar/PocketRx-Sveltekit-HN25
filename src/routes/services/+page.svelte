@@ -187,9 +187,9 @@
 >
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-4xl text-center">
-			<h2 class="mb-6 text-3xl font-bold sm:text-4xl" data-aos="fade-up">
+			<p class="mb-6 text-3xl font-bold sm:text-4xl" data-aos="fade-up">
 				Ready to Transform How You Understand Your Health?
-			</h2>
+			</p>
 			<p class="mb-10 text-xl text-white/80" data-aos="fade-up" data-aos-delay="100">
 				Join thousands of users who have taken control of their health journey with PocketRx
 			</p>
